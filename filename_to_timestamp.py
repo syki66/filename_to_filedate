@@ -12,5 +12,6 @@ for f in os.listdir():
 
     if extension in extension_list:
         os.rename(f, new_name+extension)
+        print(f'changed: {f}')
     else:
         pass
