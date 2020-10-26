@@ -1,11 +1,11 @@
 from datetime import datetime
 import os
-
-# 사전형으로 해야됨. 그러고 오름차순
+from collections import Counter
+from collections import OrderedDict
 
 extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", "HEIF"]
 
-
+# 파일의 날짜 얻기, (찍은 날짜 존재하면 찍은 날짜로 대입하는 것으로 변경해야됨)
 def getFileDate(filename):
     timestamp = os.path.getmtime(filename)
     date = datetime.fromtimestamp(timestamp)
@@ -13,20 +13,52 @@ def getFileDate(filename):
     new_name = f'{date.year:04}-{date.month:02}-{date.day:02}_{date.hour:02}-{date.minute:02}-{date.second:02}'
     return new_name
 
+# 찍은 날짜가 존재하는지 함수 추가하기
+
+# 각 확장자마다, 날짜기준 오름차순으로 만든 OrderedDict형을 반환함
+def sortFiles(ext_list):
+    files = {}
+    for ext in ext_list:
+        temp = {}
+        for filename in os.listdir():
+            if (filename[filename.rfind('.'):].upper() == ext):
+                temp[filename] = getFileDate(filename)
+        files[ext] = OrderedDict(sorted(temp.items(),key=lambda x: x[1]))
+        print(files[ext])
+    return files
 
 
-dic = {}
+def checkDuplicate():
+    pass
+
+
+
+
+#test_dic = OrderedDict( sorted(sortFilesByExt(extensions)['.JPG'].items(), key=lambda x: x[1]) )
+#print(test_dic)
+sortFiles(extensions)
+#print( sortFilesByExt(extensions) )
+
+
+'''
 for ext in extensions:
-    temp = {}
-    for filename in os.listdir():
-        if (filename[filename.rfind('.'):].upper() == ext):
-            temp[filename] = getFileDate(filename)
-    dic[ext] = temp
+    number = 1
+    for key, value in test_dic[ext].items():
+        duplicate_count = Counter(test_dic[ext].values())
+        if duplicate_count[value] > 1:
+            test_dic[ext][key] = f'{value}_{number}'
+            number += 1
+'''
 
 
 
 
-print(dic)
+        # print(key.ljust(20) + value)
+
+
+
+
+
 
 
 '''
