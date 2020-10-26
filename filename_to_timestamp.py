@@ -24,41 +24,23 @@ def sortFiles(ext_list):
             if (filename[filename.rfind('.'):].upper() == ext):
                 temp[filename] = getFileDate(filename)
         files[ext] = OrderedDict(sorted(temp.items(),key=lambda x: x[1]))
-        print(files[ext])
     return files
 
+# 날짜가 중복된 파일에만 번호 매기기 (중복이 아닐때까지 초단위 시간 올리기)
+def renameDuplicateFiles(dict):
+    for ext in extensions:
+        number = 1
+        for key, value in dict[ext].items():
+            files_count = { k:v for k, v in Counter(dict[ext].values()).items() if v != 1 }
+            if value in files_count:
+                dict[ext][key] = f'{value}_{number}'
+                number += 1
+                
+                if (files_count[value] == 2):
+                    dict[ext][key] = f'{value}_{number}'                
+    return dict
 
-def checkDuplicate():
-    pass
-
-
-
-
-#test_dic = OrderedDict( sorted(sortFilesByExt(extensions)['.JPG'].items(), key=lambda x: x[1]) )
-#print(test_dic)
-sortFiles(extensions)
-#print( sortFilesByExt(extensions) )
-
-
-'''
-for ext in extensions:
-    number = 1
-    for key, value in test_dic[ext].items():
-        duplicate_count = Counter(test_dic[ext].values())
-        if duplicate_count[value] > 1:
-            test_dic[ext][key] = f'{value}_{number}'
-            number += 1
-'''
-
-
-
-
-        # print(key.ljust(20) + value)
-
-
-
-
-
+print( renameDuplicateFiles(sortFiles(extensions)) )
 
 
 '''
