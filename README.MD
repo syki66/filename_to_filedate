@@ -14,3 +14,7 @@
 ## 변경 로그
 
 - [CHANGELOG.MD](https://github.com/syki66/filename_to_timestamp/blob/master/CHANGELOG.MD)
+
+# Todos
+
+- 중복파일 이름 변경될때 기존 날짜는 밀리도록 해야됨

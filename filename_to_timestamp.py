@@ -3,7 +3,7 @@ import os
 from collections import Counter
 from collections import OrderedDict
 
-extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", "HEIF"]
+extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", "HEIF", ".TXT"]
 
 # 파일의 날짜 얻기, (찍은 날짜 존재하면 찍은 날짜로 대입하는 것으로 변경해야됨)
 def getFileDate(filename):
@@ -35,15 +35,17 @@ def reassemble(value, number):
 # 날짜가 중복된 파일에만 중복이 아닐때까지 초단위 시간 올리기
 def renameDuplicateFiles(dict):
     for ext in extensions:
-        prev_value = "nothing"
+        prev_values = []
         for key, value in dict[ext].items():
             dict_without_me = { k:v for k, v in dict[ext].items() if ( k != key) }
             num = 0
-            while (reassemble(value, num) in dict_without_me.values()) and (prev_value == value):
+            while (reassemble(value, num) in dict_without_me.values() and reassemble(value, num) in prev_values ):
                 num += 1           
             dict[ext][key] = reassemble(value, num)
-            prev_value = value
+            prev_values.append(reassemble(value, num))
     return dict
+
+
 
 '''
 def renameFiles:
@@ -73,7 +75,7 @@ def testDuplicateFunc():
     for i in range(len(original)):
         print(f'변경전: {original[i]},  변경후: {modified[i]}')
 
-
+testDuplicateFunc()
 
 '''
 # classified_files = []
