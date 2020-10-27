@@ -26,21 +26,53 @@ def sortFiles(ext_list):
         files[ext] = OrderedDict(sorted(temp.items(),key=lambda x: x[1]))
     return files
 
-# 날짜가 중복된 파일에만 번호 매기기 (중복이 아닐때까지 초단위 시간 올리기)
+# 파일명 재조립하기
+def reassemble(value, number):
+    date = value[ :value.rfind('-')]
+    second = int(value[value.rfind('-')+1: ])
+    return f'{date}-{second+number:02}'
+
+# 날짜가 중복된 파일에만 중복이 아닐때까지 초단위 시간 올리기
 def renameDuplicateFiles(dict):
     for ext in extensions:
-        number = 1
+        prev_value = "nothing"
         for key, value in dict[ext].items():
-            files_count = { k:v for k, v in Counter(dict[ext].values()).items() if v != 1 }
-            if value in files_count:
-                dict[ext][key] = f'{value}_{number}'
-                number += 1
-                
-                if (files_count[value] == 2):
-                    dict[ext][key] = f'{value}_{number}'                
+            dict_without_me = { k:v for k, v in dict[ext].items() if ( k != key) }
+            num = 0
+            while (reassemble(value, num) in dict_without_me.values()) and (prev_value == value):
+                num += 1           
+            dict[ext][key] = reassemble(value, num)
+            prev_value = value
     return dict
 
-print( renameDuplicateFiles(sortFiles(extensions)) )
+'''
+def renameFiles:
+    print ( renameDuplicateFiles(sortFiles(extensions)) )
+'''
+
+
+
+
+
+
+
+def testDuplicateFunc():
+    original = []
+    modified = []
+
+    for ext in extensions:
+        for i in sortFiles(extensions)[ext].items():
+            original.append(i)
+
+    for ext in extensions:
+        for i in renameDuplicateFiles(sortFiles(extensions))[ext].items():
+            modified.append(i)
+
+    print(len(original), len(modified))
+
+    for i in range(len(original)):
+        print(f'변경전: {original[i]},  변경후: {modified[i]}')
+
 
 
 '''
