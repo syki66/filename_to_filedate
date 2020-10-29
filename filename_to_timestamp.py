@@ -48,8 +48,8 @@ def handleDuplicates(dict):
     return dict
 
 # 파일이름 변경 추적 현황을 콘솔에 출력해주기
+original_dict = sortFiles(extensions)
 def printFilenameStatus(extension, key, value):
-    original_dict = sortFiles(extensions)
     if (original_dict[extension][key] != value):
         print(f'CHANGED: "{key}" -> "{original_dict[extension][key]}" -> "{value}"')
     else:
