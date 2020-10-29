@@ -1,6 +1,5 @@
 from datetime import datetime
 import os
-from collections import Counter
 from collections import OrderedDict
 
 extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", "HEIF"]
@@ -14,6 +13,7 @@ def getFileDate(filename):
     return new_name
 
 # 찍은 날짜가 존재하는지 함수 추가하기
+# heic 파일은 jpg 변환후 찍은날짜 가져와야됨
 
 # 각 확장자마다, 날짜기준 오름차순으로 만든 OrderedDict형을 반환함
 def sortFiles(ext_list):
@@ -42,26 +42,47 @@ def handleDuplicates(dict):
             num = 0
             # 중복파일이 존재하고 이전에 존재했던 값이 아닐때까지 1씩 계속 증가시키기
             while (reassemble(value, num) in dict_without_me.values() and reassemble(value, num) in prev_values ):
-                num += 1           
+                num += 1
             dict[ext][key] = reassemble(value, num)
             prev_values.append(reassemble(value, num))
     return dict
 
 # 실제 파일이름 변경
+converted_file_count = 0
 def renameFiles(dict):
+    global converted_file_count
     for ext in extensions:
         for key, value in dict[ext].items():
             os.rename(key, value)
+            print(f'CHANGED: "{key}" -> "{value}"')
+            converted_file_count += 1
 
-
-refined_dict = handleDuplicates(sortFiles(extensions))
-#print (refined_dict)
-renameFiles(refined_dict)
-
-
+def isDuplicateFile(originalDict, renamedDict):
+    pass
 
 
 
+user_input = input("If you type \"YES\" or \"Y\", The image files are renamed to timestamp\n")
+yes = True if (user_input.lower() == 'y' or user_input.lower() == 'yes') else False
+
+if (yes):
+    print("\nCHANGING IMAGE FILES NAME...\n")
+
+    refined_dict = handleDuplicates(sortFiles(extensions))    
+    renameFiles(refined_dict)
+
+    print(f'\nFINISHED. CONVERTED {converted_file_count} FILES')
+else:
+    print("GOOD BYE")
+
+input("\nPRESS ENTER TO EXIT.")
+
+# 중복네이밍 로그에 보여주기
+# 한번 이름 싹 밀어주는 함수 추가해야됨
+
+
+'''
+# 중복 파일 변경 제대로 되었나 테스트하는 함수
 def testDuplicateFunc():
     original = []
     modified = []
@@ -80,26 +101,14 @@ def testDuplicateFunc():
         print(f'변경전: {original[i]},  변경후: {modified[i]}')
 
 # testDuplicateFunc()
+'''
+
+
+
 
 '''
-print(f'CHANGED, BUT I INCREASED 1 SECOND BECAUSE FILE NAME ALREADY EXIST: {filename}')
+# print(f'CHANGED, BUT I INCREASED 1 SECOND BECAUSE FILE NAME ALREADY EXIST: {filename}')
 
-user_input = input("If you type \"YES\" or \"Y\", The image files are renamed to timestamp\n")
-yes = True if (user_input.lower() == 'y' or user_input.lower() == 'yes') else False
-
-if (yes):
-    print("\nCHANGING IMAGE FILES NAME...\n")
-
-    # wipeUpFileName(extension_list)
-
-    for f in os.listdir():
-        convertFileName(f, extension_list)
-    
-    print(f'\nFINISHED. CONVERTED {converted_file_count} FILES')
-else:
-    print("GOOD BYE")
-
-input("\nPRESS ENTER TO EXIT.")
 '''
 
 
