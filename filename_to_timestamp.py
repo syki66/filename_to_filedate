@@ -47,6 +47,14 @@ def handleDuplicates(dict):
             prev_values.append(reassemble(value, num))
     return dict
 
+# 파일이름 변경 추적 현황을 콘솔에 출력해주기
+def printFilenameStatus(extension, key, value):
+    original_dict = sortFiles(extensions)
+    if (original_dict[extension][key] != value):
+        print(f'CHANGED: "{key}" -> "{original_dict[extension][key]}" -> "{value}"')
+    else:
+        print(f'CHANGED: "{key}" -> "{value}"')
+
 # 실제 파일이름 변경
 converted_file_count = 0
 def renameFiles(dict):
@@ -54,14 +62,10 @@ def renameFiles(dict):
     for ext in extensions:
         for key, value in dict[ext].items():
             os.rename(key, value)
-            print(f'CHANGED: "{key}" -> "{value}"')
+            printFilenameStatus(ext, key, value)
             converted_file_count += 1
 
-def isDuplicateFile(originalDict, renamedDict):
-    pass
-
-
-
+# 실행부
 user_input = input("If you type \"YES\" or \"Y\", The image files are renamed to timestamp\n")
 yes = True if (user_input.lower() == 'y' or user_input.lower() == 'yes') else False
 
@@ -77,39 +81,7 @@ else:
 
 input("\nPRESS ENTER TO EXIT.")
 
-# 중복네이밍 로그에 보여주기
-# 한번 이름 싹 밀어주는 함수 추가해야됨
-
-
-'''
-# 중복 파일 변경 제대로 되었나 테스트하는 함수
-def testDuplicateFunc():
-    original = []
-    modified = []
-
-    for ext in extensions:
-        for i in sortFiles(extensions)[ext].items():
-            original.append(i)
-
-    for ext in extensions:
-        for i in handleDuplicates(sortFiles(extensions))[ext].items():
-            modified.append(i)
-
-    print(len(original), len(modified))
-
-    for i in range(len(original)):
-        print(f'변경전: {original[i]},  변경후: {modified[i]}')
-
-# testDuplicateFunc()
-'''
-
-
-
-
-'''
-# print(f'CHANGED, BUT I INCREASED 1 SECOND BECAUSE FILE NAME ALREADY EXIST: {filename}')
-
-'''
+# 한번 이름 싹 밀어주는 함수 추가해야됨 (그래도 예외처리도 넣어주기)
 
 
 '''
