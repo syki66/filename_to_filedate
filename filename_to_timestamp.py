@@ -17,9 +17,9 @@ def getFileDate(filename):
 # heic 파일은 jpg 변환후 찍은날짜 가져와야됨
 
 # 각 확장자마다, 날짜기준 오름차순으로 만든 OrderedDict형을 반환함
-def sortFiles(ext_list):
+def sortFiles():
     files = {}
-    for ext in ext_list:
+    for ext in extensions:
         temp = {}
         for filename in os.listdir():
             if (filename[filename.rfind('.'):].upper() == ext):
@@ -49,7 +49,7 @@ def handleDuplicates(dict):
     return dict
 
 # 파일이름 변경 추적 현황을 콘솔에 출력해주기
-original_dict = sortFiles(extensions)
+original_dict = sortFiles()
 def printFilenameStatus(extension, key, value):
     if (original_dict[extension][key] != value):
         print(f'CHANGED: "{key}" -> "{original_dict[extension][key]}" -> "{value}"')
@@ -64,13 +64,12 @@ def convertToHash(filename):
     hash_value = md5.hexdigest()
     return hash_value
 
-# 특정 확장자의 파일 이름을 전부 해시값으로 변환
+# 파일 이름을 전부 해시값으로 변환 (중복 이름 에러 방지)
 def wipeUpFileName(dict):
     for ext in extensions:
         for key, value in dict[ext].items():
             hashed_key = convertToHash(key)
             os.rename(key, hashed_key)
-
 
 # 실제 파일이름 변경
 converted_file_count = 0
@@ -84,41 +83,24 @@ def renameFiles(dict):
             converted_file_count += 1
 
 # 실행부
-user_input = input("If you type \"YES\" or \"Y\", The image files are renamed to timestamp\n")
+user_input = input("IF YOU TYPE \"YES\" OR \"Y\", THE IMAGE FILES ARE RENAMED TO TIMESTAMP\n")
 yes = True if (user_input.lower() == 'y' or user_input.lower() == 'yes') else False
 
-if (yes):
-    print("\nCHANGING IMAGE FILES NAME...\n")
+try:
+    if (yes):
+        print("\nCHANGING IMAGE FILES NAME...\n")
 
-    refined_dict = handleDuplicates(sortFiles(extensions))
-    wipeUpFileName(refined_dict)
+        refined_dict = handleDuplicates(sortFiles())
+        wipeUpFileName(refined_dict)
+        renameFiles(refined_dict)
 
-    renameFiles(refined_dict)
-
-    print(f'\nFINISHED. CONVERTED {converted_file_count} FILES')
-else:
-    print("GOOD BYE")
+        if converted_file_count == 0:
+            print("NO FILES ARE CONVERTED")
+        else:
+            print(f'\nFINISHED. CONVERTED {converted_file_count} FILES')
+    else:
+        print("GOOD BYE")
+except:
+    print("ERROR")
 
 input("\nPRESS ENTER TO EXIT.")
-
-# 한번 이름 싹 밀어주는 함수 추가해야됨 (그래도 예외처리도 넣어주기)
-# FileExistsError
-
-
-
-
-
-
-'''
-def wipeUpFileName(ext_list):
-    import random
-    prefix = random.randint(1,100000)
-
-    name_count = 0
-    for extension in ext_list:
-        for filename in os.listdir():
-            
-            if (filename[filename.rfind('.'):].upper() == extension):
-                os.rename(filename, f'{prefix}_{name_count}{extension}')
-                name_count+=1
-'''
