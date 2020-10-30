@@ -1,6 +1,7 @@
 from datetime import datetime
 import os
 from collections import OrderedDict
+import hashlib
 
 extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", "HEIF"]
 
@@ -55,13 +56,30 @@ def printFilenameStatus(extension, key, value):
     else:
         print(f'CHANGED: "{key}" -> "{value}"')
 
+# 파일 이름을 해시값으로 변환
+def convertToHash(filename):
+    encoded_name = filename.encode('utf-8')
+    md5 = hashlib.new('md5')
+    md5.update(encoded_name)
+    hash_value = md5.hexdigest()
+    return hash_value
+
+# 특정 확장자의 파일 이름을 전부 해시값으로 변환
+def wipeUpFileName(dict):
+    for ext in extensions:
+        for key, value in dict[ext].items():
+            hashed_key = convertToHash(key)
+            os.rename(key, hashed_key)
+
+
 # 실제 파일이름 변경
 converted_file_count = 0
 def renameFiles(dict):
     global converted_file_count
     for ext in extensions:
         for key, value in dict[ext].items():
-            os.rename(key, value)
+            hashed_key = convertToHash(key)
+            os.rename(hashed_key, value)
             printFilenameStatus(ext, key, value)
             converted_file_count += 1
 
@@ -72,7 +90,9 @@ yes = True if (user_input.lower() == 'y' or user_input.lower() == 'yes') else Fa
 if (yes):
     print("\nCHANGING IMAGE FILES NAME...\n")
 
-    refined_dict = handleDuplicates(sortFiles(extensions))    
+    refined_dict = handleDuplicates(sortFiles(extensions))
+    wipeUpFileName(refined_dict)
+
     renameFiles(refined_dict)
 
     print(f'\nFINISHED. CONVERTED {converted_file_count} FILES')
@@ -82,6 +102,11 @@ else:
 input("\nPRESS ENTER TO EXIT.")
 
 # 한번 이름 싹 밀어주는 함수 추가해야됨 (그래도 예외처리도 넣어주기)
+# FileExistsError
+
+
+
+
 
 
 '''
