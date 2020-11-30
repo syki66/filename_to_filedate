@@ -1,35 +1,53 @@
-import PIL
 from PIL import Image
-from PIL.ExifTags import TAGS
 import os
+from datetime import datetime
+
+#exif 변환해야됨
+
+# get "Date created", "Date modified"
+def getFileDate(filename):
+    dateArray = []
+    if os.path.getctime(filename) is not None:
+        timestamp = os.path.getctime(filename)
+        date = datetime.fromtimestamp(timestamp)
+        dateCreated = f'{date.year:04}-{date.month:02}-{date.day:02}_{date.hour:02}-{date.minute:02}-{date.second:02}'
+        dateArray.append(dateCreated)
+    if os.path.getmtime(filename) is not None:
+        timestamp = os.path.getmtime(filename)
+        date = datetime.fromtimestamp(timestamp)
+        dateModified = f'{date.year:04}-{date.month:02}-{date.day:02}_{date.hour:02}-{date.minute:02}-{date.second:02}'
+        dateArray.append(dateModified)
+    return dateArray
+
+# get Dates of exif data ("DateTimeOriginal", "DateTimeDigitized", "DateTime")
+def getExifDate(filename):
+    image = Image.open(filename)
+    exif = image.getexif()
+
+    dateArray = []
+    if 36867 in exif:
+        dateTimeOriginal = f'{int(exif[36867][0:4]):04}-{int(exif[36867][5:7]):02}-{int(exif[36867][8:10]):02}_{int(exif[36867][11:13]):02}-{int(exif[36867][14:16]):02}-{int(exif[36867][17:19]):02}'
+        dateArray.append(dateTimeOriginal)
+    if 36868 in exif:
+        dateTimeDigitized = f'{int(exif[36868][0:4]):04}-{int(exif[36868][5:7]):02}-{int(exif[36868][8:10]):02}_{int(exif[36868][11:13]):02}-{int(exif[36868][14:16]):02}-{int(exif[36868][17:19]):02}'
+        dateArray.append(dateTimeDigitized)
+    if 306 in exif:
+        dateTime = f'{int(exif[306][0:4]):04}-{int(exif[306][5:7]):02}-{int(exif[306][8:10]):02}_{int(exif[306][11:13]):02}-{int(exif[306][14:16]):02}-{int(exif[306][17:19]):02}'
+        dateArray.append(dateTime)
+    return dateArray
+
+def pickOldestDate(filename):
+    return getFileDate(filename) + getExifDate(filename)
 
 
 
-
-for i in os.listdir():
-
-    # path to the image or video
-    imagename = i
+for file in os.listdir():
 
 
     try:
-        # read the image data using PIL
-        image = Image.open(imagename)
-
-
-
-        # extract EXIF data
-        exifdata = image.getexif()
-
-        print(i)
-        if 36867 in exifdata:
-            print(f'DateTimeOriginal : {exifdata[36867]}')
-        if 36868 in exifdata:
-            print(f'DateTimeDigitized : {exifdata[36868]}')
-        if 306 in exifdata:
-            print(f'DateTime : {exifdata[306]}')
-        print("---------------------------\n")
-
+        print(file)
+        print(pickOldestDate(file))
+        print("")
 
     except Exception as e:
 
@@ -37,22 +55,10 @@ for i in os.listdir():
 
 
 
-# # path to the image or video
-# imagename = "IMG_2616.JPG"
-
-# # read the image data using PIL
-# image = Image.open(imagename)
+# imagename = "IMG_2620.JPG"
+# print(pickOldestDate(imagename))
 
 
-
-# exifdata = image.getexif()
-
-# if 36867 in exifdata:
-#     print(f'DateTimeOriginal : {exifdata[36867]}')
-# if 36868 in exifdata:
-#     print(f'DateTimeDigitized : {exifdata[36868]}')
-# if 306 in exifdata:
-#     print(f'DateTime : {exifdata[306]}')
 
 
 
@@ -61,8 +67,6 @@ for i in os.listdir():
 DateTime
 DateTimeOriginal
 DateTimeDigitized
-수정한날짜
-만든날짜
-
-이렇게 비교해서 가장 오래된 timestamp로 결정하기
+Date created
+Date modified
 '''
