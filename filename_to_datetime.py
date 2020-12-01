@@ -26,6 +26,7 @@ def getFileDate(filename):
 # get Dates of exif data ("DateTimeOriginal", "DateTimeDigitized", "DateTime")
 def getExifDate(filename):
     dateArray = []
+    Image.MAX_IMAGE_PIXELS = None # DecompressionBombWarning 안뜨게 하기
     try:
         image = Image.open(filename)
         exif = image.getexif()

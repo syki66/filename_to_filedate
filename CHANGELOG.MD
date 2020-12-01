@@ -1,3 +1,9 @@
+Version 0.2.6 (build 2020-12-02)
+
+- 큰 이미지 파일 불러올때 뜨는 `DecompressionBombWarning` 경고 제거
+
+---
+
 Version 0.2.5 (build 2020-12-01)
 
 - 미디어 파일 확장자 추가 *(`.TIF`, `.AVI`, `.MP4`, `.MOV`, `.K3G`, `.JPS`)*

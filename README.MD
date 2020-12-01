@@ -7,7 +7,7 @@
 ## 주의사항 및 특징
 
 - 파일의 이름을 파일의 날짜로 변경함
-    - 2020년 1월 1일 11시 23분 32초 => `2020_01_01-11_23_32`
+    - 2020년 1월 1일 오후 8시 22분 33초 => `2020_01_01-20_22_33`
 - 아래 목록중 가장 오래된 날짜를 기준으로함
     - 사진 : `DateTime`, `DateTimeOriginal`, `DateTimeDigitized`, `Date created`, `Date modified`
     - 그 외 : `Date created`, `Date modified`
