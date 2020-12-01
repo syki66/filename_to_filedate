@@ -2,19 +2,53 @@ from datetime import datetime
 import os
 from collections import OrderedDict
 import hashlib
+from PIL import Image
 
-extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", "HEIF"]
+extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", ".HEIF", ".TIF", ".TIFF", ".MP4", ".AVI", ".MOV", ".K3G", ".JPS"]
 
-# 파일의 날짜 얻기, (찍은 날짜 존재하면 찍은 날짜로 대입하는 것으로 변경해야됨)
+#heic f -> jpg 변환하고 exif 추출후 삭제 하는 함수
+
+# get "Date created", "Date modified"
 def getFileDate(filename):
-    timestamp = os.path.getmtime(filename)
-    date = datetime.fromtimestamp(timestamp)
-    
-    new_name = f'{date.year:04}-{date.month:02}-{date.day:02}_{date.hour:02}-{date.minute:02}-{date.second:02}'
-    return new_name
+    dateArray = []
+    if os.path.getctime(filename) is not None:
+        timestamp = os.path.getctime(filename)
+        date = datetime.fromtimestamp(timestamp)
+        dateCreated = f'{date.year:04}-{date.month:02}-{date.day:02}_{date.hour:02}-{date.minute:02}-{date.second:02}'
+        dateArray.append(dateCreated)
+    if os.path.getmtime(filename) is not None:
+        timestamp = os.path.getmtime(filename)
+        date = datetime.fromtimestamp(timestamp)
+        dateModified = f'{date.year:04}-{date.month:02}-{date.day:02}_{date.hour:02}-{date.minute:02}-{date.second:02}'
+        dateArray.append(dateModified)
+    return dateArray
 
-# 찍은 날짜가 존재하는지 함수 추가하기
-# heic 파일은 jpg 변환후 찍은날짜 가져와야됨
+# get Dates of exif data ("DateTimeOriginal", "DateTimeDigitized", "DateTime")
+def getExifDate(filename):
+    dateArray = []
+    try:
+        image = Image.open(filename)
+        exif = image.getexif()
+        if 36867 in exif:
+            dateTimeOriginal = f'{int(exif[36867][0:4]):04}-{int(exif[36867][5:7]):02}-{int(exif[36867][8:10]):02}_{int(exif[36867][11:13]):02}-{int(exif[36867][14:16]):02}-{int(exif[36867][17:19]):02}'
+            dateArray.append(dateTimeOriginal)
+        if 36868 in exif:
+            dateTimeDigitized = f'{int(exif[36868][0:4]):04}-{int(exif[36868][5:7]):02}-{int(exif[36868][8:10]):02}_{int(exif[36868][11:13]):02}-{int(exif[36868][14:16]):02}-{int(exif[36868][17:19]):02}'
+            dateArray.append(dateTimeDigitized)
+        if 306 in exif:
+            dateTime = f'{int(exif[306][0:4]):04}-{int(exif[306][5:7]):02}-{int(exif[306][8:10]):02}_{int(exif[306][11:13]):02}-{int(exif[306][14:16]):02}-{int(exif[306][17:19]):02}'
+            dateArray.append(dateTime)
+    # except Exception as e:
+    #     print(e)
+    except:
+        pass
+    return dateArray
+
+# 가장 오래된 날짜만 반환해주는 함수
+def pickOldestDate(filename):
+    date = getFileDate(filename) + getExifDate(filename)
+    date.sort()
+    return date[0]
 
 # 각 확장자마다, 날짜기준 오름차순으로 만든 OrderedDict형을 반환함
 def sortFiles():
@@ -23,7 +57,7 @@ def sortFiles():
         temp = {}
         for filename in os.listdir():
             if (filename[filename.rfind('.'):].upper() == ext):
-                temp[filename] = f'{getFileDate(filename)}{ext}'
+                temp[filename] = f'{pickOldestDate(filename)}{ext}'
         files[ext] = OrderedDict(sorted(temp.items(),key=lambda x: x[1]))
     return files
 
@@ -83,12 +117,16 @@ def renameFiles(dict):
             converted_file_count += 1
 
 # 실행부
-user_input = input("IF YOU TYPE \"YES\" OR \"Y\", THE IMAGE FILES ARE RENAMED TO TIMESTAMP\n")
+print('WARNING!! THIS OPERATION IS IRREVRERSIBLE!!')
+print(f'YOUR CURRENT DIRECTORY IS')
+print(f'\n\"{os.getcwd()}\"\n')
+
+user_input = input("IF YOU TYPE \"YES\" OR \"Y\", THE MEDIA FILES ARE RENAMED TO \"ORIGINAL FILE DATE\"\n")
 yes = True if (user_input.lower() == 'y' or user_input.lower() == 'yes') else False
 
 try:
     if (yes):
-        print("\nCHANGING IMAGE FILES NAME...\n")
+        print("\nCHANGING MEDIA FILES NAME...\n")
 
         refined_dict = handleDuplicates(sortFiles())
         wipeUpFileName(refined_dict)
