@@ -3,10 +3,31 @@ import os
 from collections import OrderedDict
 import hashlib
 from PIL import Image
+from pymediainfo import MediaInfo
+from dateutil import tz
 
 extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", ".HEIF", ".TIF", ".TIFF", ".MP4", ".AVI", ".MOV", ".K3G", ".JPS"]
 
-#heic f -> jpg 변환하고 exif 추출후 삭제 하는 함수
+#heic f -> jpg 변환하고 exif 추출후 삭제 하는 함수 작성
+
+# get Dates of video metadata ("encoded_date", "tagged_date")
+def getVideoDate(filename):
+    dateArray = []
+    def getDate(key):
+        value = media_info.tracks[2].to_data()[key].split('UTC ')[1]
+        utcDate = datetime.strptime(value, '%Y-%m-%d %H:%M:%S')
+        utcDate = utcDate.replace(tzinfo=tz.tzutc())
+        localDate = str(utcDate.astimezone(tz.tzlocal())).split('+')[0]
+        return f'{int(localDate[0:4]):04}-{int(localDate[5:7]):02}-{int(localDate[8:10]):02}_{int(localDate[11:13]):02}-{int(localDate[14:16]):02}-{int(localDate[17:19]):02}'
+    try:
+        media_info = MediaInfo.parse(filename)
+        if media_info.tracks[2].to_data()['encoded_date'] is not None:
+            dateArray.append(getDate('encoded_date'))
+        if media_info.tracks[2].to_data()['tagged_date'] is not None:
+            dateArray.append(getDate('tagged_date'))
+    except:
+        pass
+    return dateArray
 
 # get "Date created", "Date modified"
 def getFileDate(filename):
@@ -47,7 +68,7 @@ def getExifDate(filename):
 
 # 가장 오래된 날짜만 반환해주는 함수
 def pickOldestDate(filename):
-    date = getFileDate(filename) + getExifDate(filename)
+    date = getFileDate(filename) + getExifDate(filename) + getVideoDate(filename)
     date.sort()
     return date[0]
 
@@ -139,7 +160,8 @@ try:
             print(f'\nFINISHED. CONVERTED {converted_file_count} FILES')
     else:
         print("GOOD BYE")
-except:
+except Exception as e:
     print("ERROR")
+    print(e)
 
 input("\nPRESS ENTER TO EXIT.")

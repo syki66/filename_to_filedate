@@ -10,7 +10,7 @@
     - 2020년 1월 1일 오후 8시 22분 33초 => `2020_01_01-20_22_33`
 - 아래 목록중 가장 오래된 날짜를 기준으로함
     - 사진 : `DateTime`, `DateTimeOriginal`, `DateTimeDigitized`, `Date created`, `Date modified`
-    - 그 외 : `Date created`, `Date modified`
+    - 비디오 : `Date created`, `Date modified`, `encoded_date`, `tagged_date`
 - 미리 지정한 확정자만 이름이 변경되도록 함 
     - 현재 변경되는 확장자 : `.JPG`, `.JPEG`, `.PNG`, `.GIF`, `.HEIC`, `.HEIF`, `.TIF`, `.TIFF`, `.MP4`, `.AVI`, `.MOV`, `.K3G`, `.JPS`
 - 이 프로그램을 실행하면 같은 디렉토리에 있는 파일들만 이름이 변경됨
@@ -33,5 +33,4 @@
 # Todos
 
 - `heic`, `heif`의 exif 추출 가능케하기
-- 동영상은 `media created date` 기준으로 날짜 바꿀수 있게하기
 - 카카오톡 다운로드 파일은 제목에서 날짜 추출 하기

@@ -1,6 +1,7 @@
 Version 0.2.6 (build 2020-12-02)
 
 - 큰 이미지 파일 불러올때 뜨는 `DecompressionBombWarning` 경고 제거
+- 비디오 메타데이터 날짜 2종류 추가 (`encoded_date`, `tagged_date`)
 
 ---
 
