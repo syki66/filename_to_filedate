@@ -8,7 +8,37 @@ from dateutil import tz
 
 extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", ".HEIF", ".TIF", ".TIFF", ".MP4", ".AVI", ".MOV", ".K3G", ".JPS"]
 
-#heic f -> jpg 변환하고 exif 추출후 삭제 하는 함수 작성
+# exiftool.exe 존재여부 확인 (heic, 삭제 예정)
+def detectExiftool():
+    if 'exiftool.exe' in os.listdir():
+        print('\"exiftool.exe\" DETECTED.\n')
+    else:
+        print('\"exiftool.exe\" IS NOT DETECTED. HEIC, HEIF FILES WILL RENAMED BY FILEDATE (NOT EXIF DATE)\n')
+
+# get exif of HEIF HEIC image (heic 자체 지원 방법 찾으면 나중에 삭제할 예정)
+def getHeicExif(filename):
+    import subprocess
+    dateArray = []
+    def getDate(value):
+        date = str(datetime.strptime(value, '%Y:%m:%d %H:%M:%S'))
+        return f'{int(date[0:4]):04}-{int(date[5:7]):02}-{int(date[8:10]):02}_{int(date[11:13]):02}-{int(date[14:16]):02}-{int(date[17:19]):02}'
+    try:
+        if filename.upper().endswith('.HEIC') or filename.upper().endswith('.HEIF'):
+            exe = "exiftool"
+            process = subprocess.Popen([exe, filename], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+            exif = {}
+            for output in process.stdout:
+                line = output.strip().split(":",1)
+                exif[line[0].strip()] = line[1].strip()
+            if 'Date/Time Original' in exif:
+                dateArray.append(getDate(exif['Date/Time Original'].split('.')[0]))
+            if 'Create Date' in exif:
+                dateArray.append(getDate(exif['Create Date'].split('.')[0]))
+            if 'Modify Date' in exif:
+                dateArray.append(getDate(exif['Modify Date'].split('+')[0]))
+    except:
+        pass
+    return dateArray
 
 # get Dates of video metadata ("encoded_date", "tagged_date")
 def getVideoDate(filename):
@@ -68,7 +98,7 @@ def getExifDate(filename):
 
 # 가장 오래된 날짜만 반환해주는 함수
 def pickOldestDate(filename):
-    date = getFileDate(filename) + getExifDate(filename) + getVideoDate(filename)
+    date = getFileDate(filename) + getExifDate(filename) + getVideoDate(filename) + getHeicExif(filename) # (heic, 삭제 예정)
     date.sort()
     return date[0]
 
@@ -139,6 +169,7 @@ def renameFiles(dict):
             converted_file_count += 1
 
 # 실행부
+detectExiftool() #(heic, 삭제 예정)
 print('WARNING!! THIS OPERATION IS IRREVRERSIBLE!!')
 print(f'YOUR CURRENT DIRECTORY IS')
 print(f'\n\"{os.getcwd()}\"\n')
