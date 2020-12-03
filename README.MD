@@ -40,3 +40,9 @@
 - gui 환경 구성
 - gui에서 시간대 변경 가능하게
 - 코드 분리하기
+
+# exe 변환시 --add-binary 넣어줘야 mediamediainfo 에서 dll 제대로 불러옴
+
+```
+pyinstaller --onefile --console --icon pen.ico --add-binary "C:/Users/syki66/AppData/Local/Programs/Python/Python38-32/Lib/site-packages/pymediainfo/MediaInfo.dll;." filename_to_datetime.py
+```
