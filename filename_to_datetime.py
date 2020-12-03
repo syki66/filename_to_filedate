@@ -168,11 +168,18 @@ def renameFiles(dict):
             printFilenameStatus(ext, key, value)
             converted_file_count += 1
 
+# 변환전 변환될 파일 개수 출력해주기
+def ToBeConvertedCount(dict):
+    count = 0
+    for ext in extensions:
+        count += len(dict[ext])
+    return count
+
 # 실행부
 detectExiftool() #(heic, 삭제 예정)
-print('WARNING!! THIS OPERATION IS IRREVRERSIBLE!!')
-print(f'YOUR CURRENT DIRECTORY IS')
-print(f'\n\"{os.getcwd()}\"\n')
+print('WARNING!! THIS OPERATION IS IRREVRERSIBLE!!\n')
+print(f'YOUR CURRENT DIRECTORY IS \"{os.getcwd()}\"\n')
+print(f'{ToBeConvertedCount(original_dict)} MEDIA FILES WILL BE CONVERTED.\n')
 
 user_input = input("IF YOU TYPE \"YES\" OR \"Y\", THE MEDIA FILES ARE RENAMED TO \"ORIGINAL FILE DATE\"\n")
 yes = True if (user_input.lower() == 'y' or user_input.lower() == 'yes') else False
