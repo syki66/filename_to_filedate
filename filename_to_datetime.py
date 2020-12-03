@@ -21,9 +21,9 @@ def getVideoDate(filename):
         return f'{int(localDate[0:4]):04}-{int(localDate[5:7]):02}-{int(localDate[8:10]):02}_{int(localDate[11:13]):02}-{int(localDate[14:16]):02}-{int(localDate[17:19]):02}'
     try:
         media_info = MediaInfo.parse(filename)
-        if 'encoded_date' in media_info.tracks[2].to_data().keys():
+        if 'encoded_date' in media_info.tracks[2].to_data():
             dateArray.append(getDate('encoded_date'))
-        if 'tagged_date' in media_info.tracks[2].to_data().keys():
+        if 'tagged_date' in media_info.tracks[2].to_data():
             dateArray.append(getDate('tagged_date'))
     except:
         pass
