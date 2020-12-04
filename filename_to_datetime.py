@@ -8,13 +8,6 @@ from dateutil import tz
 
 extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", ".HEIF", ".TIF", ".TIFF", ".MP4", ".AVI", ".MOV", ".K3G", ".JPS"]
 
-# exiftool.exe 존재여부 확인 (heic, 삭제 예정)
-def detectExiftool():
-    if 'exiftool.exe' in os.listdir():
-        print('\"exiftool.exe\" DETECTED.\n')
-    else:
-        print('\"exiftool.exe\" IS NOT DETECTED. HEIC, HEIF FILES WILL RENAMED BY FILEDATE (NOT EXIF DATE)\n')
-
 # get exif of HEIF HEIC image (heic 자체 지원 방법 찾으면 나중에 삭제할 예정)
 def getHeicExif(filename):
     import subprocess
@@ -22,9 +15,17 @@ def getHeicExif(filename):
     def getDate(value):
         date = str(datetime.strptime(value, '%Y:%m:%d %H:%M:%S'))
         return f'{int(date[0:4]):04}-{int(date[5:7]):02}-{int(date[8:10]):02}_{int(date[11:13]):02}-{int(date[14:16]):02}-{int(date[17:19]):02}'
+    def resource_path(relative_path):
+        """ Get absolute path to resource, works for dev and for PyInstaller """
+        try:
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+        return os.path.join(base_path, relative_path)
     try:
         if filename.upper().endswith('.HEIC') or filename.upper().endswith('.HEIF'):
-            exe = "exiftool"
+            exe = resource_path("exiftool.exe")
             process = subprocess.Popen([exe, filename], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
             exif = {}
             for output in process.stdout:
@@ -176,12 +177,11 @@ def ToBeConvertedCount(dict):
     return count
 
 # 실행부
-detectExiftool() #(heic, 삭제 예정)
 print('WARNING!! THIS OPERATION IS IRREVRERSIBLE!!\n')
 print(f'YOUR CURRENT DIRECTORY IS \"{os.getcwd()}\"\n')
 print(f'{ToBeConvertedCount(original_dict)} MEDIA FILES WILL BE CONVERTED.\n')
 
-user_input = input("IF YOU TYPE \"YES\" OR \"Y\", THE MEDIA FILES ARE RENAMED TO \"ORIGINAL FILE DATE\"\n")
+user_input = input("IF YOU TYPE \"YES\" OR \"Y\", THE MEDIA FILES ARE RENAMED TO \"ORIGINAL FILE DATE\"\n>>> ")
 yes = True if (user_input.lower() == 'y' or user_input.lower() == 'yes') else False
 
 try:

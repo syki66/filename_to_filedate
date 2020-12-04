@@ -1,3 +1,9 @@
+Version 0.2.8 (build 2020-12-04)
+
+- `exiftool.exe`을 `FilenameToFiledate.exe` 내부에 집어 넣음
+
+---
+
 Version 0.2.7 (build 2020-12-03)
 
 - `exiftool.exe` 파일이 동일 디렉토리에 존재한다면 heic, heif 파일의 exif 정보를 불러올 수 있음

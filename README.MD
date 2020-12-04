@@ -4,7 +4,7 @@
 
 ---
 
-## 주의사항 및 특징
+# 주의사항 및 특징
 
 - 파일의 이름을 파일의 날짜로 변경함
     - 2020년 1월 1일 오후 8시 22분 33초 => `2020_01_01-20_22_33`
@@ -21,13 +21,10 @@
     - 먼저 전자의 두개 파일은 `2020_01_01-11_11_11`, `2020_01_01-11_11_12`으로 변경 (이름 순서는 원본 파일이름의 오름차순)
     - 후자의 1개 파일은 `2020_01_01-11_11_13`으로 변경
 - `원본 이름` -> `해시값` -> `수정된 이름` 순으로 변경되어 중복이름으로 인한 에러는 사실상 발생하기 어려우나, 만에 하나 해시값이 중복될 경우, 재실행 하면 해결됨
-- HEIF(.heic) 파일의 경우 [exiftool.exe](https://exiftool.org/)를 다운로드 받아서 이 프로그램과 동일한 디렉토리에 두어야 `exif 날짜`를 적용할 수 있음
-    - `exiftool.exe`가 존재하지 않으면, `Date created`, `Date modified` 둘 중에서 오래된 날짜로 결정함
-    - 파일명 주의: `exiftool.exe` *(대소문자 똑같이 변경해야됨)*
 
 ---
 
-## 변경 로그
+# 변경 로그
 
 - [CHANGELOG.MD](https://github.com/syki66/filename_to_timestamp/blob/master/CHANGELOG.MD)
 
@@ -35,14 +32,18 @@
 
 # Todo List
 
-- `heic`, `heif`의 exif를 자체 해결하기
+- `heic`, `heif`의 exif를 자체적으로 해결하기
 <!-- - 카카오톡 다운로드 파일은 제목에서 날짜 추출 하기 -->
 - gui 환경 구성
 - gui에서 시간대 변경 가능하게
 - 코드 분리하기
 
-# exe 변환시 --add-binary 넣어줘야 mediamediainfo 에서 dll 제대로 불러옴
+---
+
+# pyinstaller 사용시 아래 참고
+
+> 같은 디렉토리에 `filename_to_datetime.py`, `exiftool.exe`, `pen.ico` 위치시키고, 및 `pymediainfo`에 있는 dll 파일 위치 넣어주기
 
 ```
-pyinstaller --onefile --console --icon pen.ico --add-binary "C:/Users/syki66/AppData/Local/Programs/Python/Python38-32/Lib/site-packages/pymediainfo/MediaInfo.dll;." filename_to_datetime.py
+pyinstaller --onefile --icon pen.ico --add-data "exiftool.exe;." --add-binary "C:/Users/syki66/AppData/Local/Programs/Python/Python38-32/Lib/site-packages/pymediainfo/MediaInfo.dll;." filename_to_datetime.py
 ```
