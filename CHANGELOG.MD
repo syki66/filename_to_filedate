@@ -1,6 +1,7 @@
 Version 0.2.8 (build 2020-12-04)
 
-- `exiftool.exe`을 `FilenameToFiledate.exe` 내부에 집어 넣음
+- HEIF(.heic) 파일의 exif 추출 문제 때문에 [exiftool.exe](https://exiftool.org/)을 `FilenameToFiledate.exe` 내부에 집어 넣음
+- "준비중" 문구 추가 및 콘솔에 뜨는 문구 일부 수정
 
 ---
 

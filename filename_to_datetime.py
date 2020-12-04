@@ -8,6 +8,8 @@ from dateutil import tz
 
 extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", ".HEIF", ".TIF", ".TIFF", ".MP4", ".AVI", ".MOV", ".K3G", ".JPS"]
 
+print("PREPARING FOR RENAMING FILES...\n")
+
 # get exif of HEIF HEIC image (heic 자체 지원 방법 찾으면 나중에 삭제할 예정)
 def getHeicExif(filename):
     import subprocess
@@ -179,7 +181,7 @@ def ToBeConvertedCount(dict):
 # 실행부
 print('WARNING!! THIS OPERATION IS IRREVRERSIBLE!!\n')
 print(f'YOUR CURRENT DIRECTORY IS \"{os.getcwd()}\"\n')
-print(f'{ToBeConvertedCount(original_dict)} MEDIA FILES WILL BE CONVERTED.\n')
+print(f'{ToBeConvertedCount(original_dict)} MEDIA FILES WILL BE RENAMED.\n')
 
 user_input = input("IF YOU TYPE \"YES\" OR \"Y\", THE MEDIA FILES ARE RENAMED TO \"ORIGINAL FILE DATE\"\n>>> ")
 yes = True if (user_input.lower() == 'y' or user_input.lower() == 'yes') else False
@@ -193,9 +195,9 @@ try:
         renameFiles(refined_dict)
 
         if converted_file_count == 0:
-            print("NO FILES ARE CONVERTED")
+            print("NO FILES ARE RENAMED")
         else:
-            print(f'\nFINISHED. CONVERTED {converted_file_count} FILES')
+            print(f'\nFINISHED. {converted_file_count} FILES RENAMED')
     else:
         print("GOOD BYE")
 except Exception as e:
