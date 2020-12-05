@@ -1,3 +1,11 @@
+Version 0.2.9 (build 2020-12-05)
+
+- 보조툴 2가지 추가 *(`hour_converter.py`, `line_up_seconds.py`)*
+    - `hour_converter.py` : 시간을 입력하게 되면, 파일 이름에서 입력 시간만큼 날짜가 계산된 후, 리네이밍
+    - `line_up_seconds.py` : 수동으로 `YYYY-MM-DD_hh-mm` 형식을 입력하면, 초단위를 00부터 1씩 올리며 리네이밍
+
+---
+
 Version 0.2.8 (build 2020-12-04)
 
 - HEIF(.heic) 파일의 exif 추출 문제 때문에 [exiftool.exe](https://exiftool.org/)을 `FilenameToFiledate.exe` 내부에 집어 넣음

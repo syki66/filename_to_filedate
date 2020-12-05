@@ -28,7 +28,7 @@
 - 확장자가 소문자일 경우 대문자로 변경됨
 - `원본 이름` -> `해시값` -> `수정된 이름` 순으로 변경되어 중복이름으로 인한 에러는 사실상 발생하기 어려우나, 만에 하나 해시값이 중복될 경우, 재실행 하면 해결됨
 - 오래된 비디오 파일의 경우, `UTC +00:00` 기준으로 지역시간의 시차만큼 오차날 수도 있음
-    - []()
+    - [hour_converter.py](https://github.com/syki66/filename_to_filedate/blob/master/extra_tools/hour_converter.py)를 사용하여 시간대를 수동으로 변경할 수 있음
 
 ---
 

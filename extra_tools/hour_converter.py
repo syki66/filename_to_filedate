@@ -19,7 +19,7 @@ def changeHour(hour):
             os.rename(old_filename, new_filename)
             print(f'변경됨 : {old_filename} -> {new_filename}')
         except Exception as e:
-            print(f'에러발생 : {e}')
+            print(f'에러발생 : \"{old_filename}\" {e}')
 
 try:
     hour = int(input("시간 값을 입력해주세요 : "))
