@@ -1,3 +1,10 @@
+Version 0.2.10 (build 2020-12-25)
+
+- 보조툴 수정 *(`line_up_seconds.py`)*
+    - `line_up_seconds.py` : 초단위가 99를 초과하게되면 분단위를 1 증가시키도록 변경
+
+---
+
 Version 0.2.9 (build 2020-12-05)
 
 - 보조툴 2가지 추가 *(`hour_converter.py`, `line_up_seconds.py`)*
