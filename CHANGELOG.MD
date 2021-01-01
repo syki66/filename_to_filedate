@@ -1,3 +1,10 @@
+Version 0.2.11 (build 2021-01-01)
+
+- 보조툴 수정 *(`line_up_seconds.py`)*
+    - `line_up_seconds.py` : second 변수의 초기값도 사용자가 직접 입력할 수 있도록 변경
+
+---
+
 Version 0.2.10 (build 2020-12-25)
 
 - 보조툴 수정 *(`line_up_seconds.py`)*

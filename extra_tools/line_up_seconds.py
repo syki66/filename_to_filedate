@@ -2,10 +2,10 @@ import os
 import re
 
 print('주의 : 같은 디렉토리에 있는 모든 파일이 변환 과정을 거침\n')
-print('특정 날짜를 입력하면 초단위를 1초 차이로 순서대로 변경해줌')
-print('입력은 \"2020-01-01_09-30\" 이런식으로 초 단위는 비워둔 채로 입력')
-print('\"2020-01-01_11-11-23.ext\" 이 형식의 파일만 변환됨\n')
-print('초단위가 99를 초과할때 분단위가 1 올라감')
+print('\"YYYY-MM-DD_hh-mm-ss.ext\" 이 형식의 이름을 가진 파일만 변환됨')
+print('입력은 \"YYYY-MM-DD_hh-mm-ss\" 형식으로 입력해야됨')
+print('입력 날짜 기준으로 초단위 오름차순으로 파일의 이름을 변경함')
+print('초단위가 99를 초과할때 분단위가 1 올라감\n')
 
 def isValidValue(value, regex, maxLength):
     if len(value) > maxLength:
@@ -19,9 +19,10 @@ def isValidValue(value, regex, maxLength):
             raise Exception('형식이 맞지 않습니다.')
 
 def changeName(date):
-    new_date = date.rsplit('-', 1)[0]
-    minute = int(date.rsplit('-', 1)[1])
-    second = 0
+    new_date = date.rsplit('-', 2)[0]
+    minute = int(date.rsplit('-', 2)[1])
+    second = int(date.rsplit('-', 2)[2])
+
     for file in os.listdir():
         try:
             old_filename = file
@@ -41,9 +42,9 @@ def changeName(date):
 
 try:
     date = input("시간 값을 입력해주세요 : ")
-    if (isValidValue(date, '\d\d\d\d-\d\d-\d\d_\d\d-\d\d', 16)):
+    if (isValidValue(date, '\d\d\d\d-\d\d-\d\d_\d\d-\d\d-\d\d', 19)):
         changeName(date)
 except Exception as e:
-    print(f'\n에러발생 : {e} \"YYYY-MM-DD_hh-mm\"')
+    print(f'\n에러발생 : 입력값의 {e} \"YYYY-MM-DD_hh-mm-ss\"')
 
 input("\n엔터를 누르면 종료됨")
