@@ -21,3 +21,5 @@ for filename in os.listdir():
         
     except Exception as e:
         print(f'에러발생: {e}')
+
+input('\n\"ENTER\" 키를 눌러 종료\n')
