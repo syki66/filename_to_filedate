@@ -1,3 +1,12 @@
+Version 0.2.12 (build 2021-01-03)
+
+- 보조툴 추가 *(`timestamp_to_date_converter.py`)*
+    - `timestamp_to_date_converter.py` : 타임스탬프를 가진 파일이름을 날짜값으로 변경해줌
+- 보조툴 수정 *(`hour_converter.py`, `line_up_seconds.py`)*
+    - 변환시 확장자를 대문자로 바꿈
+
+---
+
 Version 0.2.11 (build 2021-01-01)
 
 - 보조툴 수정 *(`line_up_seconds.py`)*

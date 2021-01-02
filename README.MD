@@ -32,6 +32,14 @@
 
 ---
 
+# Extra Tools
+
+- [hour_converter.py](https://github.com/syki66/filename_to_filedate/blob/master/extra_tools/hour_converter.py) : 시간대를 변경해주는 툴
+- [line_up_seconds.py](https://github.com/syki66/filename_to_filedate/blob/master/extra_tools/line_up_seconds.py) : 기준값 날짜로 줄세워주는 툴
+- [timestamp_to_date_converter.py](https://github.com/syki66/filename_to_filedate/blob/master/extra_tools/timestamp_to_date_converter.py) : 타임스탬프를 날짜로 변환해주는 툴
+
+---
+
 # 변경 로그
 
 - [CHANGELOG.MD](https://github.com/syki66/filename_to_timestamp/blob/master/CHANGELOG.MD)
@@ -45,7 +53,6 @@
 - 코드 분리하기
 - 원본 파일이름 남길지 선택 옵션
 - YYYY MM DD 이런것들 사이에 넣을수 있는 문자를 커스터마이징 할수 있게하기
-<!-- - 카카오톡 다운로드 파일은 제목에서 날짜 추출 하기 -->
 
 ---
 

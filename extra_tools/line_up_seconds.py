@@ -2,6 +2,7 @@ import os
 import re
 
 print('주의 : 같은 디렉토리에 있는 모든 파일이 변환 과정을 거침\n')
+print('확장자는 대문자로 변경됨')
 print('\"YYYY-MM-DD_hh-mm-ss.ext\" 이 형식의 이름을 가진 파일만 변환됨')
 print('입력은 \"YYYY-MM-DD_hh-mm-ss\" 형식으로 입력해야됨')
 print('입력 날짜 기준으로 초단위 오름차순으로 파일의 이름을 변경함')
@@ -27,7 +28,7 @@ def changeName(date):
         try:
             old_filename = file
             old_name = old_filename.split(".")[0]
-            ext = old_filename.split(".")[1]
+            ext = old_filename.split(".")[1].upper()
             if isValidValue(old_name, '\d\d\d\d-\d\d-\d\d_\d\d-\d\d-\d\d', 19):
                 new_filename = f'{new_date}-{minute:02}-{second:02}.{ext}'
                 os.rename(old_filename, new_filename)
