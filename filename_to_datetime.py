@@ -6,7 +6,8 @@ from PIL import Image
 from pymediainfo import MediaInfo
 from dateutil import tz
 
-extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", ".HEIF", ".TIF", ".TIFF", ".MP4", ".AVI", ".MOV", ".K3G", ".JPS"]
+extensions = [".JPG", ".JPEG", ".PNG", ".GIF", ".HEIC", ".HEIF", ".TIF", ".TIFF"\
+                 ".MP4", ".MOV", ".AVI", "WMV", "MPG", "MPEG"]
 
 print("PREPARING FOR RENAMING FILES...\n")
 

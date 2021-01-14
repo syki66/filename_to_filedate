@@ -1,3 +1,11 @@
+Version 0.2.13 (build 2021-01-15)
+
+- 확장자 리스트 수정
+    - 추가 : `.WMV`, `.MPG`, `.MPEG`
+    - 제거 : `.JPS`, `.K3G`
+
+---
+
 Version 0.2.12 (build 2021-01-03)
 
 - 보조툴 추가 *(`timestamp_to_date_converter.py`)*
