@@ -1,10 +1,10 @@
-# filename_to_filedate
+# FilenameToFiledate
 
 파일의 이름을 파일의 `날짜`로 변경해주는 프로그램
 
 ---
 
-# Feature
+## Feature
 
 - 파일의 이름을 파일의 날짜로 변경함
     - 2020년 1월 1일 오후 8시 22분 33초 => `2020_01_01-20_22_33.EXT`
@@ -24,7 +24,7 @@
 
 ---
 
-# Caution
+## Caution
 
 - 프로그램 실행 시 오류가 뜨게 된다면, `바이러스 및 위협 방지`에 들어가서 이 프로그램을 `디바이스에서 허용` 해주어야함
 - 프로그램 실행 후 이미 `바뀐 파일 이름은 되돌릴 수 없음`
@@ -32,7 +32,7 @@
 
 ---
 
-# Extra Tools
+## Extra Tools
 
 - [hour_converter.py](https://github.com/syki66/filename_to_filedate/blob/master/extra_tools/hour_converter.py) : 시간대를 변경해주는 툴
 - [line_up_seconds.py](https://github.com/syki66/filename_to_filedate/blob/master/extra_tools/line_up_seconds.py) : 기준값 날짜로 줄세워주는 툴
@@ -40,13 +40,13 @@
 
 ---
 
-# 변경 로그
+## Change Log
 
 - [CHANGELOG.MD](https://github.com/syki66/filename_to_timestamp/blob/master/CHANGELOG.MD)
 
 ---
 
-# Todo List
+## Todo List
 
 - `heic`, `heif`의 exif를 자체적으로 해결하기
 - gui 환경 구성하면서 보조툴 기능 병합
@@ -56,9 +56,9 @@
 
 ---
 
-# pyinstaller 빌드시 참고
+## Build
 
-> 같은 디렉토리에 `filename_to_datetime.py`, `exiftool.exe`, `pen.ico` 위치시키고, 및 `pymediainfo`에 있는 dll 파일 위치 넣어주기
+> pyinstaller 사용시, 같은 디렉토리에 `filename_to_datetime.py`, `exiftool.exe`, `pen.ico` 위치시키고, 및 `pymediainfo`에 있는 dll 파일 위치 넣어주기
 
 ```
 pyinstaller --onefile --icon pen.ico --add-data "exiftool.exe;." --add-binary "C:/Users/syki66/AppData/Local/Programs/Python/Python38-32/Lib/site-packages/pymediainfo/MediaInfo.dll;." filename_to_datetime.py
