@@ -1,3 +1,10 @@
+Version 0.2.14 (build 2021-01-26)
+
+- 보조툴 추가 *(`second_converter.py`)*
+    - `second_converter.py` : 초를 입력하게 되면, 파일 이름에서 입력 초만큼 날짜가 계산된 후, 리네이밍
+
+---
+
 Version 0.2.13 (build 2021-01-15)
 
 - 확장자 리스트 수정

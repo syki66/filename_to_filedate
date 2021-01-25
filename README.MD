@@ -35,6 +35,7 @@
 ## Extra Tools
 
 - [hour_converter.py](https://github.com/syki66/filename_to_filedate/blob/master/extra_tools/hour_converter.py) : 시간대를 변경해주는 툴
+- [second_converter.py](https://github.com/syki66/filename_to_filedate/blob/master/extra_tools/second_converter.py) : 초단위를 변경해주는 툴
 - [line_up_seconds.py](https://github.com/syki66/filename_to_filedate/blob/master/extra_tools/line_up_seconds.py) : 기준값 날짜로 줄세워주는 툴
 - [timestamp_to_date_converter.py](https://github.com/syki66/filename_to_filedate/blob/master/extra_tools/timestamp_to_date_converter.py) : 타임스탬프를 날짜로 변환해주는 툴
 
