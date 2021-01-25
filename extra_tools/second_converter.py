@@ -7,7 +7,7 @@ print('\"+\"숫자 또는 \"-숫자\"를 이용해서 초 값만 변경가능')
 print('3분 이전으로 이름변경을 한다면 \"-180\"를 입력')
 print('\"2020-01-01_11-11-23.ext\" 이 형식일 경우만 변환됨\n')
 
-def changeHour(second):
+def changeSecond(second):
     for old_filename in os.listdir():
         try:
             file_date = old_filename.split(".")[0]
@@ -24,7 +24,7 @@ def changeHour(second):
 
 try:
     second = int(input("초 값을 입력해주세요 : "))
-    changeHour(second)
+    changeSecond(second)
 except Exception as e:
     print(f'에러발생 : {e}')
 
