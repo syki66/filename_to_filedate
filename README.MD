@@ -11,7 +11,7 @@
 - 프로그램을 작동시킨 디렉토리에 있는 파일들만 이름이 변경됨
 - `원본 이름` -> `해시값` -> `수정된 이름` 순으로 변경됨
 - 미리 지정한 확장자만 파일 이름이 변경됨
-    - 현재 변경되는 확장자 : `.JPG`, `.JPEG`, `.PNG`, `.GIF`, `.HEIC`, `.HEIF`, `.TIF`, `.TIFF`, `.MP4`, `.MOV`, `.AVI`, `WMV`, `MPG`, `MPEG`
+    - 현재 변경되는 확장자 : `.JPG`, `.JPEG`, `.PNG`, `.GIF`, `.HEIC`, `.HEIF`, `.TIF`, `.TIFF`, `.MP4`, `.MOV`, `.AVI`, `.WMV`, `.MPG`, `.MPEG`
 - 아래 목록중 가장 오래된 날짜를 기준으로함
     - 사진 : `DateTime`, `DateTimeOriginal`, `DateTimeDigitized`, `Date created`, `Date modified`
     - 비디오 : `Date created`, `Date modified`, `encoded_date`, `tagged_date`

@@ -1,3 +1,9 @@
+Version 0.2.15 (build 2021-01-30)
+
+- 일부 확장자가 리네이밍 되지 않는 버그 수정
+
+---
+
 Version 0.2.14 (build 2021-01-26)
 
 - 보조툴 추가 *(`second_converter.py`)*
