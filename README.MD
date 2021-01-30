@@ -62,5 +62,5 @@
 > pyinstaller 사용시, 같은 디렉토리에 `filename_to_datetime.py`, `exiftool.exe`, `pen.ico` 위치시키고, 및 `pymediainfo`에 있는 dll 파일 위치 넣어주기
 
 ```
-pyinstaller --onefile --icon pen.ico --add-data "exiftool.exe;." --add-binary "C:/Users/syki66/AppData/Local/Programs/Python/Python38-32/Lib/site-packages/pymediainfo/MediaInfo.dll;." filename_to_datetime.py
+pyinstaller --onefile --icon pen.ico --add-data "exiftool.exe;." --add-binary "C:\Users\syki66\AppData\Local\Programs\Python\Python39\Lib\site-packages\pymediainfo\MediaInfo.dll;." filename_to_datetime.py
 ```
